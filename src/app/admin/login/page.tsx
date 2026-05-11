@@ -16,21 +16,38 @@ export default function AdminLoginPage() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("Login button clicked");
     setLoading(true);
     setError("");
 
-    const { error: authError } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    try {
+      console.log("Checking environment variables...");
+      if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+        console.error("Environment variables missing!");
+        throw new Error("Supabase is not configured. Please check environment variables.");
+      }
 
-    if (authError) {
-      setError("Invalid credentials. Please try again.");
+      console.log("Calling Supabase signInWithPassword...");
+      const { error: authError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      console.log("Supabase call finished. Error:", authError);
+
+      if (authError) {
+        setError(authError.message || "Invalid credentials. Please try again.");
+        setLoading(false);
+        return;
+      }
+
+      console.log("Redirecting to dashboard...");
+      // Use window.location as a fallback if router.push is hanging
+      window.location.href = "/admin/dashboard";
+    } catch (err: any) {
+      console.error("Login error catch block:", err);
+      setError(err.message || "An unexpected error occurred.");
       setLoading(false);
-      return;
     }
-
-    router.push("/admin/dashboard");
   };
 
   return (
