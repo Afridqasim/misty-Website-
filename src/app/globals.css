@@ -1,0 +1,87 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+:root {
+  --background: #000000;
+  --foreground: #fafafa;
+  --accent: #d946ef;
+  --accent-purple: #9333ea;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-accent-purple: var(--accent-purple);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* 60% Black, 20% Purple, 20% Pink Gradient Look */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: 
+    radial-gradient(circle at 10% 10%, rgba(217, 70, 239, 0.15) 0%, transparent 35%),
+    radial-gradient(circle at 90% 10%, rgba(147, 51, 234, 0.15) 0%, transparent 35%),
+    radial-gradient(circle at 10% 90%, rgba(147, 51, 234, 0.15) 0%, transparent 35%),
+    radial-gradient(circle at 90% 90%, rgba(217, 70, 239, 0.15) 0%, transparent 35%),
+    radial-gradient(circle at 50% 50%, rgba(147, 51, 234, 0.08) 0%, transparent 50%);
+  background-color: #000000;
+  pointer-events: none;
+}
+
+/* Exact Reference Card/Tab Style - Solid Dark */
+.glass-tab {
+  background: #0a0a0a;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
+}
+
+.glass-tab:hover {
+  background: #0d0d0d;
+  border-color: rgba(147, 51, 234, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* Navbar specific tab style */
+.nav-pill {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 9999px;
+  padding: 8px 24px;
+  transition: all 0.3s ease;
+}
+
+.nav-pill-active {
+  background: rgba(147, 51, 234, 0.2);
+  border-color: rgba(147, 51, 234, 0.5);
+  color: white;
+  box-shadow: 0 0 15px rgba(147, 51, 234, 0.2);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
